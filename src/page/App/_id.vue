@@ -1,26 +1,22 @@
 <template>
-    <div>
-      <div>
-        <Header
-          :showLoginBtn="!isLoggedIn"
-        />
-        <AppMenu />
-        <NewAppForm
-          :notNew="true"
-          :showSecretRow="true"
-          :appData="app.form"
-          :icon="app.img"
-          :clientId="app.clientId"
-          :clientSecret="app.clientSecret"
-        />
-      </div>
-    </div>
+  <PhotoFrame>
+    <template v-slot:sidebar>
+      <AppMenu />
+    </template>
+    <NewAppForm
+      :notNew="true"
+      :showSecretRow="true"
+      :appData="app.form"
+      :icon="app.img"
+      :clientId="app.clientId"
+      :clientSecret="app.clientSecret"
+    />
+  </PhotoFrame>
 </template>
 
 <script>
-
-import Header from '@/components/Header.vue'
-import AppMenu from '@/components/AppMenu.vue'
+import PhotoFrame from '@/components/PhotoFrame'
+import AppMenu from '@/components/AppMenu'
 import NewAppForm from '@/components/NewAppForm.vue'
 
 import { mapState, mapActions } from 'vuex'
@@ -28,7 +24,6 @@ import { getCookie, disassemble } from '../../util/cookie'
 import Axios from 'axios'
 
 import env from '../../../env.json'
-import LoginVue from '../Oauth/Login.vue'
 
 export default {
   props: {
@@ -38,8 +33,8 @@ export default {
     }
   },
   components: {
-    Header,
     AppMenu,
+    PhotoFrame,
     NewAppForm
   },
   data () {
@@ -64,12 +59,13 @@ export default {
       res.status = true
       this.setLoggedIn(res)
       this.userId = parseInt(res.id)
-      Axios.get(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id + '&userId=' + this.userId).then(app => {
-        console.log(app.data)
+      Axios.get(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id).then(app => {
         this.app.img = env.DEVELOPERAPI + '/img/' + app.data.img
         this.app.form = app.data.detail
-        this.app.clientId = app.data.clientId
-        this.app.clientSecret = app.data.clientSecret
+      })
+      Axios.get(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id + '&userId' + this.userId).then(app2 => {
+        this.app.clientId = app2.data.clientId
+        this.app.clientSecret = app2.data.clientSecret
       })
     } else {
       this.$router.push({ name: 'Login' })
