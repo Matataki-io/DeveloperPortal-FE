@@ -1,5 +1,13 @@
 <template>
   <PhotoFrame>
+    <template v-slot:sidebar>
+      <div class="sidebar-menu">
+        <router-link :to="{path: '/apps'}">
+          <i class="el-icon-arrow-left" />
+          Back to Applications
+        </router-link>
+      </div>
+    </template>
     <NewAppForm />
   </PhotoFrame>
 </template>
@@ -25,6 +33,9 @@ export default {
   methods: {
     ...mapActions(['setLoggedIn', 'setCurrentAppId'])
   },
+  created () {
+    document.title('创建新的 App - Matataki 开发者中心')
+  },
   mounted () {
     const c = getCookie('ACCESS-TOKEN')
     if (c) {
@@ -47,3 +58,29 @@ export default {
   }
 }
 </script>
+
+<style lang="less" scoped>
+.sidebar-menu {
+  background:rgba(247,247,247,1);
+  box-shadow:1px 0px 0px 0px rgba(219,219,219,1);
+  width: 290px;
+  height: 100%;
+  padding: 40px 40px 0;
+  a {
+    padding-left: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+    line-height: 22px;
+    text-decoration: none;
+    &:hover {
+      color: #542DE0;
+    }
+  }
+}
+@media screen and (max-width: 1200px) {
+  .sidebar-menu {
+    padding: 40px 0 0;
+  }
+}
+</style>
