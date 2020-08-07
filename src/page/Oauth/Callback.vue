@@ -62,7 +62,7 @@ export default {
       } else {
         this.app = {
           id: this.$route.params.id,
-          img: env.DEVELOPERAPI + '/img/' + app.data.img,
+          img: app.data.img === '' || app.data.img === undefined ? require('@/assets/img/app-default.png') : env.DEVELOPERAPI + '/img/' + app.data.img,
           ...app.data.detail
         }
       }
@@ -73,7 +73,7 @@ export default {
         type: 'error',
         duration: 4000
       })
-      this.router.push({ name: 'Landing' })
+      this.$router.push({ name: 'Landing' })
     })
 
     const token = this.$route.params.callback.replace('type=token&token=', '')
