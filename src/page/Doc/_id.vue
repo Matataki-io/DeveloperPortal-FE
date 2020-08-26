@@ -18,11 +18,12 @@ import DocumentationMenu from '@/components/Documentation/DocumentationMenu.vue'
 import VueMarkdown from 'vue-markdown'
 import Markdown from '@/components/Documentation/Markdown.vue'
 
-import getstarted from '@/doc/getstarted.md'
-import userprofile from '@/doc/userprofile.md'
-import userwallet from '@/doc/userwallet.md'
-import fanlocker from '@/doc/fanlocker.md'
-import hexoplugin from '@/doc/hexoplugin.md'
+import getstarted from '../../../doc/getstarted.md'
+import userprofile from '../../../doc/userprofile.md'
+import userwallet from '../../../doc/userwallet.md'
+import oauth from '../../../doc/oauth.md'
+import fanlocker from '../../../doc/fanlocker.md'
+import hexoplugin from '../../../doc/hexoplugin.md'
 
 export default {
   components: {
@@ -44,6 +45,7 @@ export default {
         getstarted: getstarted,
         userprofile: userprofile,
         userwallet: userwallet,
+        oauth: oauth,
         fanlocker: fanlocker,
         hexoplugin: hexoplugin
       }
